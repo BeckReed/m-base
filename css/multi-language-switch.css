@@ -1,0 +1,11 @@
+
+#languages{
+    margin: 2rem auto;
+    width: 50%;
+    font-size: 2.5rem;
+}
+
+#languages ul li{
+    float: left;
+    margin-right: 20rem;
+}
