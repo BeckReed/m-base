@@ -47,11 +47,6 @@ module.exports = {
         path.join(__dirname, 'src/index.js')
     ],*/
     entry: {
-        'js/webpack-test': './js/webpack-test.js',
-        'js/webpack-test2': './js/webpack-test2.js',
-        'js/chunk-test': './js/chunk-test.js',
-        'js/main1': './js/main1.js',
-        'js/main2': './js/main2.js',
         'js/index': './js/index.js'
     },
     output: {
