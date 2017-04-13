@@ -1,0 +1,14 @@
+
+#language-ul{
+    width: 50rem;
+    margin: 2rem auto;
+}
+#language-ul li{
+    margin-right: 2rem;
+}
+#helloArea{
+    width: 50rem;
+    margin: 4rem auto;
+    color: cornflowerblue;
+    font-size: 3rem;
+}

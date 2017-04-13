@@ -14,4 +14,4 @@ s,i,em{font-style: normal;text-decoration: none;}
 .fl{float: left;}
 .fr{float: right;}
 .clearfix:after{display:block;clear:both;visibility:hidden;height:0;content:'';}
-.clearfix{zoom:1;}/*IE/7/6*/
+.clearfix{zoom:1;}

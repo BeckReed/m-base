@@ -16,26 +16,19 @@
             + maximum-scale : 最大缩放
     -->
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-    <title>Index default template</title>
-    <link rel="stylesheet" href="../css/base.css" />
-    <link rel="stylesheet" href="../css/comm.css" />
+    <title>GearBest test index</title>
     <link rel="shortcut icon" href="../favicon.ico" />
-    <!--[if lt IE 9]>
-        <!--html5shiv让低版本浏览器可以识别HTML5的新标签，如header、footer、section等-->
-    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-    <!--respond让低版本浏览器可以支持CSS媒体查询功能-->
-    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <!--建议以后在html中将脚本的引入放到页面的最底下,但是以上脚本影响到DOM元素渲染必须放在上面合适-->
+    <link rel="stylesheet" href="../build/dev/style/index.css" />
 </head>
 <body>
 <div>
-    <ul>
-        <li>en</li>
-        <li>ru</li>
+    <ul class="clearfix" id="language-ul">
+        <li class="fl"><a href="#" data-lang="en">English</a></li>
+        <li class="fl"><a href="#" data-lang="ch">中文</a></li>
     </ul>
 </div>
+<div id="helloArea">HelloWorld</div>
 
-<script src="../js/lib/jquery/jquery-1.12.4.js"></script>
+<script src="../build/dev/js/index.js"></script>
 </body>
 </html>

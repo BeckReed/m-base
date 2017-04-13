@@ -51,12 +51,13 @@ module.exports = {
         'js/webpack-test2': './js/webpack-test2.js',
         'js/chunk-test': './js/chunk-test.js',
         'js/main1': './js/main1.js',
-        'js/main2': './js/main2.js'
+        'js/main2': './js/main2.js',
+        'js/index': './js/index.js'
     },
     output: {
-        filename: '[name]-[hash].js',
+        filename: '[name].js',//[name]-[hash].js
         path: path.resolve(__dirname, 'build/dev'),
-        chunkFilename: 'js/[name]--[chunkhash].js',
+        chunkFilename: 'js/[name].js',//js/[name]--[chunkhash].js
         //这里分别用hash和chunkhash，结果不一样
         //filename:'[name]-[chunkhash].js'
 
@@ -97,9 +98,9 @@ module.exports = {
             chunks: ['js/main1', 'js/main2']
         }),
 
-        new HtmlWebpackPlugin({
+       /* new HtmlWebpackPlugin({
             template: __dirname + "/html/webpack-test.html"//new 一个这个插件的实例，并传入相关的参数
-        }),
+        }),*/
         new CleanWebpackPlugin(['build/dev'], {
             verbose: true,
             dry: false,
@@ -109,11 +110,11 @@ module.exports = {
             filename:"css/[name].css",
             allChunks: true
         }),
-        new webpack.optimize.UglifyJsPlugin({
-           /* compress: {
+        /*new webpack.optimize.UglifyJsPlugin({
+           /!* compress: {
                 warnings: false
-            }*/
-        }),
+            }*!/
+        }),*/
         extractCSS,
         extractLESS,
         /*new pathChunkPlugin({name: 'vendor',test: 'build'})*/
