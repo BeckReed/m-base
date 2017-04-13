@@ -23,6 +23,15 @@
   },
   "homepage": "https://github.com/BeckReed/m-base/blob/master/README.md",
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.16",
+    "css-loader": "^0.28.0",
+    "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^2.1.0",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.3",
+    "script-loader": "^0.7.0",
+    "style-loader": "^0.16.1",
+    "uglifyjs-webpack-plugin": "^0.4.2",
     "webpack": "^2.3.3"
   }
 }

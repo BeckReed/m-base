@@ -11,8 +11,16 @@ import '../css/comm.css';//使用require导入css文件*/
 var greeter = require('../js/app-module/Greeter.js');
 document.getElementById('root').appendChild(greeter());*/
 
+/*
 module.exports = {
     sayHello:function(){
         alert('Hello World!');
     }
-};
+};*/
+
+require("../style/base.css");
+require("../style/multi-language-switch.css");
+require("../style/test.less");
+$(function () {
+    $('html').append('sssss');
+})
