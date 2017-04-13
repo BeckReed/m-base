@@ -18,7 +18,12 @@ var extractCSS  = new ExtractTextPlugin({
 },
 allChunks: false
 });
-var extractLESS = new ExtractTextPlugin({filename:'style/[name].less'});
+var extractLESS = new ExtractTextPlugin({
+    filename:  (getPath) => {
+        return getPath('style/[name].css').replace('style/js', 'style');
+    },
+    allChunks: false
+});
 /*var pathChunkPlugin = require('path-chunk-webpack-plugin');//分片路径管理插件*/
 
 /*
@@ -68,7 +73,7 @@ module.exports = {
             },
             {
                 test: /\.less$/i,
-                use: extractLESS.extract([ 'css-loader', 'less-loader' ])
+                use: extractLESS.extract({fallback: "style-loader",use:[ 'css-loader', 'less-loader' ]}),
             },
             /*{
                 test : /\.(less|css)$/,
@@ -82,14 +87,18 @@ module.exports = {
     },
     plugins: [
         /*new  webpack.optimize.CommonsChunkPlugin('common.js', ['js/main1', 'js/main2'])*/
+        new webpack.ProvidePlugin({
+            $: require.resolve('./js/lib/zepto/zepto'),
+            zepto: require.resolve('./js/lib/zepto/zepto')
+        }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'common',
             filename: 'js/common.js',
             chunks: ['js/main1', 'js/main2']
         }),
-        new webpack.ProvidePlugin({
-            $: require.resolve('./js/lib/zepto/zepto'),
-            zepto: require.resolve('./js/lib/zepto/zepto')
+
+        new HtmlWebpackPlugin({
+            template: __dirname + "/html/webpack-test.html"//new 一个这个插件的实例，并传入相关的参数
         }),
         new CleanWebpackPlugin(['build/dev'], {
             verbose: true,
@@ -107,12 +116,6 @@ module.exports = {
         }),
         extractCSS,
         extractLESS,
-        new ExtractTextPlugin({
-                filename:  (getPath) => {
-                return getPath('css/[name].css').replace('css/js', 'css');
-},
-allChunks: true
-})
         /*new pathChunkPlugin({name: 'vendor',test: 'build'})*/
 
     ],

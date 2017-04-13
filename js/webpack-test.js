@@ -20,7 +20,7 @@ module.exports = {
 
 require("../style/base.css");
 require("../style/multi-language-switch.css");
-require("../style/test.less");
+/*require("../style/test.less");*/
 $(function () {
     $('html').append('sssss');
 })
