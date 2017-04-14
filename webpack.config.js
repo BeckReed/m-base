@@ -37,11 +37,13 @@ var extractLESS = new ExtractTextPlugin({
 module.exports = {
     resolve: {
         alias: {
-            zepto: './js/zepto/zepto.js'
+            zepto: './js/lib/zepto/zepto.js'
         }
     },
     entry: {
-        'js/index': './js/index.js'
+        'js/zepto': ['./js/lib/zepto/zepto.js'],
+        'js/index': './js/index.js',
+
     },
     output: {
         filename: '[name].js',//[name]-[hash].js
@@ -67,13 +69,8 @@ module.exports = {
     plugins: [
         new webpack.ProvidePlugin({
             $: require.resolve('./js/lib/zepto/zepto'),
-            zepto: require.resolve('./js/lib/zepto/zepto')
         }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'common',
-            filename: 'js/common.js',
-            chunks: ['js/main1', 'js/main2']
-        }),
+        new webpack.optimize.CommonsChunkPlugin({name:'js/zepto', filename:'js/zepto.js'}),
         new HtmlWebpackPlugin({
             filename: 'html/index.html',    //生成的文件
             template: 'html/index.html',  //读取的模板文件,这个路径是相对于当前这个配置文件的
