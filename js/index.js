@@ -5,6 +5,8 @@
 
 require("../style/base.css");
 require('../style/index.css');
+require('../style/test.less');
+require('../style/test2.less');
 
 var userSetting=require('../js/userSetting');//初始化用户信息
 var luangagePackage=require('../js/language/language_'+userSetting.language);

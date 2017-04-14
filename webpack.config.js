@@ -6,7 +6,9 @@ var path = require('path');
 var webpack = require('webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');//清空编译目录插件
 var ExtractTextPlugin = require("extract-text-webpack-plugin");//将CSS抽取成独立的CSS文件插件
-var UglifyJSPlugin = require('uglifyjs-webpack-plugin');//压缩插件适用css、js
+var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+var CompressionWebpackPlugin = require('compression-webpack-plugin');//开启 gzip 压缩
+var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // multiple extract instances
 /*var setCssBuildPath=function getPath(path){
@@ -38,14 +40,6 @@ module.exports = {
             zepto: './js/zepto/zepto.js'
         }
     },
-   /* entry: [
-        './js/webpack-test.js',
-        './js/webpack-test2.js',
-        './js/chunk-test.js',
-        './js/main1.js',
-        './js/main2.js',
-        path.join(__dirname, 'src/index.js')
-    ],*/
     entry: {
         'js/index': './js/index.js'
     },
@@ -53,15 +47,12 @@ module.exports = {
         filename: '[name].js',//[name]-[hash].js
         path: path.resolve(__dirname, 'build/dev'),
         chunkFilename: 'js/[name].js',//js/[name]--[chunkhash].js
-        //这里分别用hash和chunkhash，结果不一样
-        //filename:'[name]-[chunkhash].js'
-
     },
     module: {
         loaders: [
             {
                 test: require.resolve('./js/lib/zepto/zepto'),//require.resolve() 是 nodejs 用来查找模块位置的方法，返回模块的入口文件
-                loader: 'exports-loader?window.Zepto!script-loader'
+                loader: 'exports-loader?window.Zepto!script-loader'//将zepto作为全局对象进行引入导出
             },
             {
                 test: /\.css$/,
@@ -71,18 +62,9 @@ module.exports = {
                 test: /\.less$/i,
                 use: extractLESS.extract({fallback: "style-loader",use:[ 'css-loader', 'less-loader' ]}),
             },
-            /*{
-                test : /\.(less|css)$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use:['css-loader', 'less-loader']
-                })
-            },*/
-
         ]
     },
     plugins: [
-        /*new  webpack.optimize.CommonsChunkPlugin('common.js', ['js/main1', 'js/main2'])*/
         new webpack.ProvidePlugin({
             $: require.resolve('./js/lib/zepto/zepto'),
             zepto: require.resolve('./js/lib/zepto/zepto')
@@ -92,10 +74,18 @@ module.exports = {
             filename: 'js/common.js',
             chunks: ['js/main1', 'js/main2']
         }),
-
-       /* new HtmlWebpackPlugin({
-            template: __dirname + "/html/webpack-test.html"//new 一个这个插件的实例，并传入相关的参数
-        }),*/
+        new HtmlWebpackPlugin({
+            filename: 'html/index.html',    //生成的文件
+            template: 'html/index.html',  //读取的模板文件,这个路径是相对于当前这个配置文件的
+            inject: true, // 自动注入
+            minify: {
+                removeComments: true,        //去注释
+                collapseWhitespace: true,    //压缩空格
+                removeAttributeQuotes: true  //去除属性引用
+            },
+            //必须通过上面的 CommonsChunkPlugin 的依赖关系自动添加 js，css 等
+            chunksSortMode: 'dependency'
+        }),
         new CleanWebpackPlugin(['build/dev'], {
             verbose: true,
             dry: false,
@@ -105,15 +95,23 @@ module.exports = {
             filename:"css/[name].css",
             allChunks: true
         }),
-        /*new webpack.optimize.UglifyJsPlugin({
-           /!* compress: {
-                warnings: false
-            }*!/
+        new webpack.optimize.UglifyJsPlugin({
+            comments: false,        //去掉注释
+            compress: {
+                warnings: false         //忽略警告
+            }
+        }),
+        /*new CompressionWebpackPlugin({ //gzip 压缩
+            asset: '[path].gz[query]',
+            algorithm: 'gzip',
+            test: new RegExp(
+                '\\.(js|css)$'    //压缩 js 与 css
+            ),
+            threshold: 10240,
+            minRatio: 0.8
         }),*/
         extractCSS,
         extractLESS,
-        /*new pathChunkPlugin({name: 'vendor',test: 'build'})*/
-
     ],
     externals: {
         $: require.resolve('./js/lib/zepto/zepto')

@@ -24,6 +24,7 @@
   "homepage": "https://github.com/BeckReed/m-base/blob/master/README.md",
   "devDependencies": {
     "clean-webpack-plugin": "^0.1.16",
+    "compression-webpack-plugin": "^0.4.0",
     "css-loader": "^0.28.0",
     "exports-loader": "^0.6.4",
     "extract-text-webpack-plugin": "^2.1.0",
