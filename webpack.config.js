@@ -43,11 +43,13 @@ module.exports = {
     entry: {
         'js/zepto': ['./js/lib/zepto/zepto.js'],
         'js/index': './js/index.js',
+        'js/showAlert': './js/showAlert.js'
 
     },
     output: {
         filename: '[name].js',//[name]-[hash].js
         path: path.resolve(__dirname, 'build/dev'),
+        publicPath: "../",
         chunkFilename: 'js/[name].js',//js/[name]--[chunkhash].js
     },
     module: {
@@ -64,6 +66,13 @@ module.exports = {
                 test: /\.less$/i,
                 use: extractLESS.extract({fallback: "style-loader",use:[ 'css-loader', 'less-loader' ]}),
             },
+            /*{ test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192&name=./image/[hash:8].[name].[ext]' },*/
+            { test: /\.(png|jpg)/, loader: "file-loader?limit=100000&name=image/[name].[ext]" },
+            {
+                // 专供iconfont方案使用的，后面会带一串时间戳，需要特别匹配到
+                test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
+                loader: 'file?name=./static/fonts/[name].[ext]',
+            },
         ]
     },
     plugins: [
@@ -75,11 +84,11 @@ module.exports = {
             filename: 'html/index.html',    //生成的文件
             template: 'html/index.html',  //读取的模板文件,这个路径是相对于当前这个配置文件的
             inject: true, // 自动注入
-            minify: {
+            /*minify: {
                 removeComments: true,        //去注释
                 collapseWhitespace: true,    //压缩空格
                 removeAttributeQuotes: true  //去除属性引用
-            },
+            },*/
             //必须通过上面的 CommonsChunkPlugin 的依赖关系自动添加 js，css 等
             chunksSortMode: 'dependency'
         }),
