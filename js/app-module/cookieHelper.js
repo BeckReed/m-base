@@ -32,8 +32,8 @@
     }
 
     return {
-        getCookie: getCookie,
-        setCookie: setCookie
+        getCookie : getCookie,
+        setCookie : setCookie
     };
 
 });
