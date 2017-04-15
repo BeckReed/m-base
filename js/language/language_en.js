@@ -3,7 +3,7 @@
  */
 
 ;define({
-    hello: "Hello",
-    world: "World"
+    hello : "Hello",
+    world : "World"
 
 });

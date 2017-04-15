@@ -3,6 +3,6 @@
  */
 
 ;define({
-    hello: "你好",
-    world: "世界"
+    hello : "你好",
+    world : "世界"
 });
