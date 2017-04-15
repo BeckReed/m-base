@@ -4,6 +4,7 @@
 
 
 require("../style/base.css");
+require("../style/comm.css");
 require('../style/index.css');
 /*require('../style/test.less');
 require('../style/test2.less');*/

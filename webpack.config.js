@@ -9,6 +9,9 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");//将CSS抽取成
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var CompressionWebpackPlugin = require('compression-webpack-plugin');//开启 gzip 压缩
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var autoprefixer = require('autoprefixer');
+var precss = require('precss')
+var postcssAssets=require('postcss-assets');
 
 // multiple extract instances
 /*var setCssBuildPath=function getPath(path){
@@ -43,7 +46,7 @@ module.exports = {
     entry: {
         'js/zepto': ['./js/lib/zepto/zepto.js'],
         'js/index': './js/index.js',
-        'js/showAlert': './js/showAlert.js'
+        /*'js/showAlert': './js/showAlert.js'*/
 
     },
     output: {
@@ -60,14 +63,17 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                use: extractCSS.extract([ 'css-loader'])
+                use: extractCSS.extract([ 'css-loader','postcss-loader'])
             },
             {
                 test: /\.less$/i,
-                use: extractLESS.extract({fallback: "style-loader",use:[ 'css-loader', 'less-loader' ]}),
+                use: extractLESS.extract({fallback: "style-loader",use:[ 'css-loader','postcss-loader', 'less-loader' ]}),
             },
-            /*{ test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192&name=./image/[hash:8].[name].[ext]' },*/
-            { test: /\.(png|jpg)/, loader: "file-loader?limit=100000&name=image/[name].[ext]" },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                loader: 'url-loader?limit=10240&name=image/[name].[ext]'
+            },
+            /*{ test: /\.(png|jpg)/, loader: "file-loader?limit=100000&name=image/[name].[ext]" },*/
             {
                 // 专供iconfont方案使用的，后面会带一串时间戳，需要特别匹配到
                 test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
@@ -75,6 +81,7 @@ module.exports = {
             },
         ]
     },
+    /*postcss: [autoprefixer({browsers:['last 2 versions']})],*/
     plugins: [
         new webpack.ProvidePlugin({
             $: require.resolve('./js/lib/zepto/zepto'),
@@ -84,6 +91,7 @@ module.exports = {
             filename: 'html/index.html',    //生成的文件
             template: 'html/index.html',  //读取的模板文件,这个路径是相对于当前这个配置文件的
             inject: true, // 自动注入
+            chunks:['js/index','js/zepto'],
             /*minify: {
                 removeComments: true,        //去注释
                 collapseWhitespace: true,    //压缩空格
@@ -105,6 +113,20 @@ module.exports = {
             comments: false,        //去掉注释
             compress: {
                 warnings: false         //忽略警告
+            }
+        }),
+        new webpack.LoaderOptionsPlugin({
+            options: {
+                postcss: function(){
+                    return [precss, autoprefixer({
+                        browsers: ['last 2 versions'],
+                    }),
+                        postcssAssets({
+                            relative: true,
+                            loadPaths: [path.resolve(__dirname, 'image')],
+                        })
+                    ];
+                }
             }
         }),
         /*new CompressionWebpackPlugin({ //gzip 压缩

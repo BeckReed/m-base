@@ -12,3 +12,13 @@
     color: cornflowerblue;
     font-size: 3rem;
 }
+
+.test{
+    display: flex;
+}
+
+#bg-div{
+    background-image: url("../image/big.png");
+    width: 283px;
+    height: 250px;
+}
