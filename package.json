@@ -4,24 +4,15 @@
   "description": "project for studying front-end",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack --config webpack.dev.config.js",
-    "pub": "webpack --config webpack.pub.config.js",
+    "release": "webpack -p --config webpack.release.config.js ",
     "start": "webpack"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/BeckReed/m-base.git"
   },
   "keywords": [
     "javascript"
   ],
-  "author": "Beck",
+  "author": "HuangZufu",
   "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/BeckReed/m-base/issues"
-  },
-  "homepage": "https://github.com/BeckReed/m-base/blob/master/README.md",
   "devDependencies": {
     "autoprefixer-loader": "^3.2.0",
     "clean-webpack-plugin": "^0.1.16",
