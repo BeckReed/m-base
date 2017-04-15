@@ -8,7 +8,6 @@ var path = require('path');
 var webpack = require('webpack');
 var CleanWebpackPlugin = require('clean-webpack-plugin');//清空编译目录插件
 var ExtractTextPlugin = require("extract-text-webpack-plugin");//将CSS抽取成独立的CSS文件插件
-/*var UglifyJSPlugin = require('uglifyjs-webpack-plugin');*/
 var CompressionWebpackPlugin = require('compression-webpack-plugin');//开启 gzip 压缩
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
@@ -94,12 +93,6 @@ module.exports = {
         new ExtractTextPlugin({
             filename:"css/[name].css",
             allChunks: true
-        }),
-        new webpack.optimize.UglifyJsPlugin({
-            comments: false,        //去掉注释
-            compress: {
-                warnings: false         //忽略警告
-            }
         }),
         new webpack.LoaderOptionsPlugin({
             options: {
