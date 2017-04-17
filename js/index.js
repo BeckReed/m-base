@@ -9,6 +9,7 @@ require('../style/index.css');
 
 var userSetting=require('../js/userSetting');//初始化用户信息
 var luangagePackage=require('../js/language/language_'+userSetting.language);
+alert('ddddddddd')
 
 $(function () {
     $('#helloArea').text(luangagePackage.hello+luangagePackage.world);

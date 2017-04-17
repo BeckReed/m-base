@@ -13,6 +13,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 var autoprefixer = require('autoprefixer');
 var precss = require('precss')
 var postcssAssets=require('postcss-assets');
+var HtmlWebpackHarddiskPlugin = require('html-webpack-harddisk-plugin')
 var extractCSS  = new ExtractTextPlugin({
     filename:  (getPath) => {
         return getPath('style/[name].css').replace('style/js', 'style');
@@ -66,34 +67,29 @@ module.exports = {
                 test: /\.(woff|woff2|svg|eot|ttf)\??.*$/,
                 loader: 'file?name=./fonts/[name].[ext]',
             },
+            {
+                test: /\.html/,
+                use: 'raw-loader'
+            }
         ]
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'ENV': JSON.stringify(process.env.ENV)
+        }),
         new webpack.ProvidePlugin({
             $: require.resolve('./js/lib/zepto/zepto'),
         }),
         new webpack.optimize.CommonsChunkPlugin({name:'js/zepto', filename:'js/zepto.js'}),
-        new HtmlWebpackPlugin({
-            filename: 'html/index.html',    //生成的文件
-            template: 'html/index.html',  //读取的模板文件,这个路径是相对于当前这个配置文件的
-            inject: true, // 自动注入
-            chunks:['js/index','js/zepto'],
-            /* minify: {
-             removeComments: true,        //去注释
-             collapseWhitespace: true,    //压缩空格
-             removeAttributeQuotes: true  //去除属性引用
-             },*/
-            //必须通过上面的 CommonsChunkPlugin 的依赖关系自动添加 js，css 等
-            chunksSortMode: 'dependency'
-        }),
-        new CleanWebpackPlugin(['build/dev'], {
+
+        /*new CleanWebpackPlugin(['build/dev'], {
             verbose: true,
             dry: false
-        }),
-        new ExtractTextPlugin({
+        }),*/
+        /*new ExtractTextPlugin({
             filename:"css/[name].css",
             allChunks: true
-        }),
+        }),*/
         new webpack.LoaderOptionsPlugin({
             options: {
                 postcss: function(){
@@ -108,6 +104,24 @@ module.exports = {
                 }
             }
         }),
+        extractCSS,
+        extractLESS,
+        new webpack.HotModuleReplacementPlugin(),
+        new HtmlWebpackPlugin({
+            alwaysWriteToDisk: true,
+            filename: 'html/index.html',    //生成的文件
+            template: 'html/index.html',  //读取的模板文件,这个路径是相对于当前这个配置文件的
+            inject: true, // 自动注入
+            chunks:['js/index','js/zepto'],
+            /* minify: {
+             removeComments: true,        //去注释
+             collapseWhitespace: true,    //压缩空格
+             removeAttributeQuotes: true  //去除属性引用
+             },*/
+            //必须通过上面的 CommonsChunkPlugin 的依赖关系自动添加 js，css 等
+            chunksSortMode: 'dependency'
+        }),
+        new HtmlWebpackHarddiskPlugin()
         /*new CompressionWebpackPlugin({ //gzip 压缩
          asset: '[path].gz[query]',
          algorithm: 'gzip',
@@ -117,8 +131,7 @@ module.exports = {
          threshold: 10240,
          minRatio: 0.8
          }),*/
-        extractCSS,
-        extractLESS
+
     ],
     externals: {
         $: require.resolve('./js/lib/zepto/zepto')
