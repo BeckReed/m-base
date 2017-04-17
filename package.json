@@ -4,7 +4,7 @@
   "description": "project for studying front-end",
   "main": "index.js",
   "scripts": {
-    "server": "webpack-dev-server --content-base build/dev --port 63343 --open ",
+    "server": "webpack-dev-server --content-base build/dev --port 63343 --open --inline",
     "dev": "webpack --config webpack.dev.config.js",
     "release": "webpack -p --config webpack.release.config.js ",
     "start": "webpack"

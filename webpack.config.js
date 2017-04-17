@@ -27,6 +27,8 @@ var extractLESS = new ExtractTextPlugin({
     allChunks: false
 });
 /*var pathChunkPlugin = require('path-chunk-webpack-plugin');//分片路径管理插件*/
+var webpackServerAddress = 'http://localhost:63343';
+var apacheAddress = 'http://localhost:63343/html/';
 
 module.exports = {
     resolve: {
@@ -35,13 +37,24 @@ module.exports = {
         }
     },
     entry: {
-        'js/zepto': ['./js/lib/zepto/zepto.js'],//抽取公共的zepto
-        'js/index': './js/index.js'
+       /* 'js/zepto': ['./js/lib/zepto/zepto.js'],//抽取公共的zepto
+        'js/index': './js/index.js',*/
+        'js/zepto': [
+            'webpack-dev-server/client?' + apacheAddress,//资源服务器地址
+            'webpack/hot/only-dev-server',
+            './js/lib/zepto/zepto.js'
+        ],
+        'js/index': [
+            'webpack-dev-server/client?' + apacheAddress,//资源服务器地址
+            'webpack/hot/only-dev-server',
+            './js/index.js',
+            'index2.js'
+        ],
     },
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'build/dev'),
-        publicPath: "../",
+        publicPath: webpackServerAddress+"/build/dev",
         chunkFilename: 'js/[name].js',
     },
     module: {
