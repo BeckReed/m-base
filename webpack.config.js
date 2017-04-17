@@ -47,8 +47,7 @@ module.exports = {
         'js/index': [
             'webpack-dev-server/client?' + apacheAddress,//资源服务器地址
             'webpack/hot/only-dev-server',
-            './js/index.js',
-            'index2.js'
+            './js/index.js'
         ],
     },
     output: {
@@ -81,7 +80,7 @@ module.exports = {
                 loader: 'file?name=./fonts/[name].[ext]',
             },
             {
-                test: /\.html/,
+                test: /\.(html|php)/,
                 use: 'raw-loader'
             }
         ]
@@ -132,6 +131,14 @@ module.exports = {
              removeAttributeQuotes: true  //去除属性引用
              },*/
             //必须通过上面的 CommonsChunkPlugin 的依赖关系自动添加 js，css 等
+            chunksSortMode: 'dependency'
+        }),
+        new HtmlWebpackPlugin({
+            alwaysWriteToDisk: true,
+            filename: 'php/index.php',    //生成的文件
+            template: 'php/index.php',  //读取的模板文件,这个路径是相对于当前这个配置文件的
+            inject: true, // 自动注入
+            chunks:['js/index','js/zepto'],
             chunksSortMode: 'dependency'
         }),
         new HtmlWebpackHarddiskPlugin()
