@@ -27,8 +27,8 @@ var extractLESS = new ExtractTextPlugin({
     allChunks: false
 });
 /*var pathChunkPlugin = require('path-chunk-webpack-plugin');//分片路径管理插件*/
-var webpackServerAddress = 'http://localhost:63343';
-var apacheAddress = 'http://localhost:63343/html/';
+var webpackServerAddress = 'http://localhost:8089/';
+var apacheAddress = 'http://m-dev.gb.com/';
 
 module.exports = {
     resolve: {

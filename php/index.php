@@ -33,7 +33,7 @@
 </div>
 <div id="helloArea">HelloWorld</div>
 
-
+<div>你好啊,测试...</div>
 
 
 </body>
