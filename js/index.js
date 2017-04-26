@@ -21,4 +21,24 @@ $(function () {
         localStorage.setItem('lang',selectLanguage);
         window.location.reload();
     })
+
+    /*var FastClick = require('../lib/fastclick');
+     FastClick.attach(document.body);*/
+
+    /*var startTime;
+    var btn=document.getElementById('tapBtn');
+    btn.addEventListener('click',function (event) {
+        console.log('click use: '+(event.timeStamp-startTime));
+        $('#clickTime').text('click事件耗时： '+ (event.timeStamp-startTime));
+    },false);
+
+    //touchestart-touchend 第一次tap的时间
+    btn.addEventListener('touchstart',function (event) {
+        startTime=event.timeStamp;
+        console.log('start event:0');
+    },false);
+    btn.addEventListener('touchend',function (event) {
+        console.log('tap use:'+(event.timeStamp-startTime));
+        $('#tapTime').text('touch事件耗时： '+ (event.timeStamp-startTime));
+    })*/
 })
